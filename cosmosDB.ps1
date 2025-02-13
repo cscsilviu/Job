@@ -10,7 +10,7 @@ foreach($sub in $subs) {
 
     $cosmosAccounts = az cosmosdb list
     
-    $cosmosAccounts = $cosmosAccounts  ConvertFrom-Json
+    $cosmosAccounts = $cosmosAccounts | ConvertFrom-Json
 
     if($cosmosAccounts -ne 0){        
         foreach($dbAccount in $cosmosAccounts) {
@@ -23,17 +23,17 @@ foreach($sub in $subs) {
             $results += $result
         }    
     } else {
-        write-host No cosmosDb accounts found on subscription $sub
+        write-host "No cosmosDb accounts found on subscription $sub"
     }
     
 }
 
 if($results) {
     try{
-        $results  Export-Csv -Path .output4.csv -NoTypeInformation
-        write-host Results exported
+        $results | Export-Csv -Path ".\output4.csv" -NoTypeInformation
+        write-host "Results exported"
     } catch {
-        write-host Error exporting data
+        write-host "Error exporting data"
     }
 }
 
